@@ -36,8 +36,6 @@ namespace Twitch_Integration
 
             }
             
-
-
         }
 
     }
@@ -151,7 +149,7 @@ namespace Twitch_Integration
         {
             if (e.Subscriber.SubscriptionPlan == SubscriptionPlan.Prime)
             {
-                client.SendMessage(e.Channel, $"Welcome {e.Subscriber.DisplayName} to the rave!!");
+                client.SendMessage(e.Channel, $"{e.Subscriber.DisplayName} joined to the rave thanks to Prime!");
                 client.SendMessage(e.Channel, "Hey there! Do you want to know about Twitch Prime? Oh! You may be asking, " +
                                               "What's Twitch Prime? Let me tell ya! When you connect your Amazon account to your " +
                                               "Twitch account, you can get 1 free sub to ANY streamer on Twitch, every month! " +
@@ -162,39 +160,40 @@ namespace Twitch_Integration
             }                
             else
             {
-                client.SendMessage(e.Channel, $"Welcome {e.Subscriber.DisplayName} to the rave!");
+                client.SendMessage(e.Channel, $"{e.Subscriber.DisplayName} joined to the rave!");
             }
-        }
-
-        private void Client_OnReSub(object sender, OnModeratorJoinedArgs e)
-        {
-
-        }
-
-        private void Clinet_OnGiftedSub(object sender, OnGiftedSubscriptionArgs e)
-        {
-
-        }
-
-        private void Client_OnBeingHosted(object sender, OnBeingHostedArgs e)
-        {
-
-        }
-
-
-        private void Client_OnModJoin(object sender, OnModeratorJoinedArgs e)
-        {
-
         }
 
         private void Client_OnReSub(object sender, OnReSubscriberArgs e)
         {
-
+            if (e.ReSubscriber.SubscriptionPlan == SubscriptionPlan.Prime)
+            {
+                client.SendMessage(e.Channel, $"{e.ReSubscriber.DisplayName} has been raving for {e.ReSubscriber.Months} months thanks to Prime!!");
+            }
+            else
+            {
+                client.SendMessage(e.Channel, $"{e.ReSubscriber.DisplayName} has been raving for {e.ReSubscriber.Months} months!!");
+            }
         }
 
-        private coid Client_UserBanned(object sender, OnUserBannedArgs e)
+        private void Clinet_OnGiftedSub(object sender, OnGiftedSubscriptionArgs e)
         {
+            client.SendMessage(e.Channel, $"{e.GiftedSubscription.DisplayName} is giving out free bumps!!");
+        }
 
+        private void Client_OnBeingHosted(object sender, OnBeingHostedArgs e)
+        {
+            client.SendMessage(e.BeingHostedNotification.Channel, $"Shoutout to {e.BeingHostedNotification.HostedByChannel} for the Host!!");
+        }
+
+        private void Client_OnModJoin(object sender, OnModeratorJoinedArgs e)
+        {
+            client.SendMessage(e.Channel, $"Everybody watch out, we got a snitch over here --> {e.Username}");
+        }
+
+        private void Client_UserBanned(object sender, OnUserBannedArgs e)
+        {
+            client.SendMessage(e.UserBan.Channel, $"THE BAN HAMMER HAS STRUCK! rip {e.UserBan.Username}, maybe dont get caught doing {e.UserBan.BanReason} next time");
         }
 
 
