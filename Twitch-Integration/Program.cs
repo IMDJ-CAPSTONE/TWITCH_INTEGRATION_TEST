@@ -49,7 +49,7 @@ namespace Twitch_Integration
 
         public Bot()
         {
-            ConnectionCredentials credentials = new ConnectionCredentials(channelName, authToken);
+            ConnectionCredentials credentials = new ConnectionCredentials("Botdog0616", authToken);
             var clientOptions = new ClientOptions
             {
                 MessagesAllowedInPeriod = 750,
